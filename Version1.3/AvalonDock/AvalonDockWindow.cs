@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using Avalonia;
+using Avalonia.Controls;
 
 namespace AvalonDock
 {
@@ -10,11 +11,12 @@ namespace AvalonDock
     {
         static AvalonDockWindow()
         {
-            ShowInTaskbarProperty.OverrideMetadata(typeof(AvalonDockWindow), new FrameworkPropertyMetadata(false));
-        
+
         }
 
         internal AvalonDockWindow()
-        { }
+        { 
+            
+        }
     }
 }

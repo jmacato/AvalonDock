@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Threading;
+using Avalonia;
+using Avalonia.Media;
+using Avalonia.Controls;
+using Avalonia.Threading;
 using System.Threading;
 
 namespace AvalonDock

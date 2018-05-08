@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
+using Avalonia;
 using System.Diagnostics;
 using System.ComponentModel;
 

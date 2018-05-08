@@ -26,8 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Interop;
+using Avalonia;
+using Avalonia.Interop;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.ComponentModel;

@@ -26,19 +26,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
+using Avalonia.Documents;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Shapes;
 
 namespace AvalonDock
 {
-    public class DockablePaneAnchorTabGroup : System.Windows.Controls.StackPanel
+    public class DockablePaneAnchorTabGroup : Avalonia.Controls.StackPanel
     {
         static DockablePaneAnchorTabGroup()
         {

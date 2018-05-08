@@ -24,21 +24,21 @@
 //EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
-using System.Windows.Controls.Primitives;
+using Avalonia.Controls.Primitives;
 using System.Threading;
-using System.Windows.Threading;
+using Avalonia.Threading;
 
 namespace AvalonDock
 {
     public abstract class Pane : 
-        System.Windows.Controls.Primitives.Selector, 
+        Avalonia.Controls.Primitives.SelectingItemsControl, 
         IDropSurface,
         IDockableControl,
         INotifyPropertyChanged
@@ -50,11 +50,11 @@ namespace AvalonDock
 
         internal Pane()
         {
-            this.Loaded += new RoutedEventHandler(OnLoaded);
-            this.Unloaded += new RoutedEventHandler(OnUnloaded);
+            this.AttachedToVisualTree += OnLoaded;
+            this.DetachedFromVisualTree += OnUnloaded;
         }
 
-        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+        protected virtual void OnLoaded(object sender, VisualTreeAttachmentEventArgs e)
         {
             //if (GetManager() == null && Parent != null)
             //    throw new InvalidOperationException("Pane must be put under a DockingManager!");
@@ -62,7 +62,7 @@ namespace AvalonDock
             AddDragPaneReferences();
         }
 
-        protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
+        protected virtual void OnUnloaded(object sender, VisualTreeAttachmentEventArgs e)
         {
             RemoveDragPaneReferences();
         }

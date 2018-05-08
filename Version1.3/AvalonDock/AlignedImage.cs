@@ -28,9 +28,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media;
+using Avalonia.Controls;
+using Avalonia;
+using Avalonia.Media;
 
 namespace AvalonDock
 {
@@ -41,7 +41,7 @@ namespace AvalonDock
             this.LayoutUpdated += new EventHandler(OnLayoutUpdated);
         }
 
-        protected override System.Windows.Size MeasureOverride(Size constraint)
+        protected override Avalonia.Size MeasureOverride(Size constraint)
         {
             Size desideredSize = new Size();
 
@@ -99,7 +99,7 @@ namespace AvalonDock
             {
                 Matrix m = Matrix.Identity;
 
-                Transform transform = VisualTreeHelper.GetTransform(v);
+                Transform transform = v;
                 if (transform != null)
                 {
                     Matrix cm = transform.Value;

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Forms.Integration;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Data;
+using Avalonia.Documents;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Navigation;
+using Avalonia.Shapes;
+using Avalonia.Forms.Integration;
 using System.IO;
 using System.Diagnostics;
 
@@ -53,7 +53,7 @@ namespace AvalonDock.DemoApp
 
         void CreatePropertyGrid()
         {
-            var pg = new System.Windows.Forms.PropertyGrid() { SelectedObject = DockManager };
+            var pg = new Avalonia.Forms.PropertyGrid() { SelectedObject = DockManager };
             WindowsFormsHost wfh = new WindowsFormsHost() { Child = pg };
             DockingManagerPropertiesHost.Content = wfh;
         }

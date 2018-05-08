@@ -26,20 +26,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
+using Avalonia.Documents;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Shapes;
 using System.ComponentModel;
 using System.Xml;
-using System.Windows.Forms.Integration;
+using Avalonia.Forms.Integration;
 using System.Diagnostics;
-using System.Windows.Threading;
+using Avalonia.Threading;
 using System.Threading;
 using System.Reflection;
 using System.Net.Cache;
@@ -316,7 +316,7 @@ namespace AvalonDock
             if (!e.Handled && Manager != null)// && State != DockableContentState.AutoHide)
             {
                 isMouseDown = true;
-                ptStartDrag = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
+                ptStartDrag = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
             }
         }
 
@@ -339,7 +339,7 @@ namespace AvalonDock
             {
                 if (!IsMouseCaptured)
                 {
-                    Point ptMouseMove = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
+                    Point ptMouseMove = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
                     ManagedContent contentToSwap = null;
                     if (ContainerPane != null)
                     {

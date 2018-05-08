@@ -29,8 +29,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
+using Avalonia;
+using Avalonia.Media;
 
 namespace AvalonDock
 {

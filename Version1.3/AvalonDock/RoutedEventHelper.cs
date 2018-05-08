@@ -6,7 +6,7 @@ using System.Text;
 namespace AvalonDock
 {
     using System;
-    using System.Windows;
+    using Avalonia;
 
     internal static class RoutedEventHelper
     {
