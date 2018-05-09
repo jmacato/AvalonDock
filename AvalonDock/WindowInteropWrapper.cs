@@ -26,8 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Interop;
+using System.Windows;
+using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -57,7 +57,7 @@ namespace AvalonDock
 
         void AttachWindow()
         {
-            _hwndSrc = HwndSource.FromAvaloniaObject(WrappedWindow) as HwndSource;
+            _hwndSrc = HwndSource.FromDependencyObject(WrappedWindow) as HwndSource;
             _hwndSrcHook = new HwndSourceHook(this.HookHandler);
             _hwndSrc.AddHook(_hwndSrcHook);            
         }
@@ -72,9 +72,9 @@ namespace AvalonDock
             }
         }
 
-        //AvaloniaObject _attachedObject;
+        //DependencyObject _attachedObject;
         
-        //public AvaloniaObject AttachedObject
+        //public DependencyObject AttachedObject
         //{
         //    get {return _attachedObject;}
         //    set
@@ -93,7 +93,7 @@ namespace AvalonDock
 
         //            if (_attachedObject != null)
         //            {
-        //                _hwndSrc = HwndSource.FromAvaloniaObject(value) as HwndSource;
+        //                _hwndSrc = HwndSource.FromDependencyObject(value) as HwndSource;
         //                _hwndSrcHook = new HwndSourceHook(this.HookHandler);
         //                _hwndSrc.AddHook(_hwndSrcHook);
         //            }
@@ -208,7 +208,7 @@ namespace AvalonDock
         void SafeFireEvent<T>(EventHandler<T> eventToFireup, T e) where T : EventArgs
         {
             if (WrappedWindow != null &&
-                PresentationSource.FromAvaloniaObject(WrappedWindow) != null)
+                PresentationSource.FromDependencyObject(WrappedWindow) != null)
             {
                 if (eventToFireup != null)
                     eventToFireup(this, e);

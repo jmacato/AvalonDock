@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Avalonia.Controls;
-using Avalonia;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace AvalonDock
 {

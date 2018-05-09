@@ -24,21 +24,21 @@
 //EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
-using Avalonia.Controls.Primitives;
+using System.Windows.Controls.Primitives;
 using System.Threading;
-using Avalonia.Threading;
+using System.Windows.Threading;
 
 namespace AvalonDock
 {
     public abstract class Pane : 
-        Avalonia.Controls.Primitives.SelectingItemsControl, 
+        System.Windows.Controls.Primitives.Selector, 
         IDropSurface,
         IDockableControl,
         INotifyPropertyChanged
@@ -50,14 +50,11 @@ namespace AvalonDock
 
         internal Pane()
         {
-            this.AttachedToVisualTree += OnLoaded;
-            this.DetachedFromVisualTree += OnUnloaded;
-            this.SelectionChanged += OnSelectionChanged;
-            this.ItemsCollectionChanged
+            this.Loaded += new RoutedEventHandler(OnLoaded);
+            this.Unloaded += new RoutedEventHandler(OnUnloaded);
         }
 
-        
-        protected virtual void OnLoaded(object sender, VisualTreeAttachmentEventArgs e)
+        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
         {
             //if (GetManager() == null && Parent != null)
             //    throw new InvalidOperationException("Pane must be put under a DockingManager!");
@@ -65,33 +62,40 @@ namespace AvalonDock
             AddDragPaneReferences();
         }
 
-        protected virtual void OnUnloaded(object sender, VisualTreeAttachmentEventArgs e)
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs e)
         {
             RemoveDragPaneReferences();
         }
 
         #region Contents management
- 
-        public static readonly AvaloniaProperty<bool> HasSingleItemProperty =
-            AvaloniaProperty.Register<Pane, bool>(nameof(HasSingleItem));
-
         public bool HasSingleItem
         {
-            get { return GetValue(HasSingleItemProperty); }
-            set { SetValue(HasSingleItemProperty, value); }
+            get
+            {
+                return (bool)GetValue(HasSingleItemProperty);
+            }
+            protected set { SetValue(HasSingleItemPropertyKey, value); }
         }
+
+        // Using a DependencyProperty as the backing store for HasSingleItem.  This enables animation, styling, binding, etc...
+        private static readonly DependencyPropertyKey HasSingleItemPropertyKey =
+            DependencyProperty.RegisterReadOnly("HasSingleItem", typeof(bool), typeof(Pane), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty HasSingleItemProperty = HasSingleItemPropertyKey.DependencyProperty;
+
         
         ManagedContent _lastSelectedContent = null;
-
-
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             if (e.RemovedItems != null &&
                 e.RemovedItems.Count > 0 &&
                 e.AddedItems != null &&
                 e.AddedItems.Count > 0)
                 _lastSelectedContent = e.RemovedItems[0] as ManagedContent;
+
+            base.OnSelectionChanged(e);
         }
+
         
         protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -200,9 +204,6 @@ namespace AvalonDock
         public static readonly DependencyProperty ContainsActiveContentProperty
             = ContainsActiveContentPropertyKey.DependencyProperty;
 
-
-        
-
         /// <summary>
         /// Gets the ContainsActiveContent property.  This dependency property 
         /// indicates if this <see cref="Pane"/> contains a <see cref="ManagedContent"/> set as active content into the parent <see cref="DockingManager"/> object. 
@@ -257,27 +258,27 @@ namespace AvalonDock
 
         DockingManager _oldManager = null;
 
-        // protected void RemoveDragPaneReferences()
-        // {
-        //     if (!DesignerProperties.GetIsInDesignMode(this))
-        //     {
-        //         if (_oldManager != null)
-        //         {
-        //             _oldManager.DragPaneServices.Unregister(this);
-        //             _oldManager = null;
-        //         }
-        //     }
-        // }
+        protected void RemoveDragPaneReferences()
+        {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                if (_oldManager != null)
+                {
+                    _oldManager.DragPaneServices.Unregister(this);
+                    _oldManager = null;
+                }
+            }
+        }
 
-        // protected void AddDragPaneReferences()
-        // {
-        //     if (!DesignerProperties.GetIsInDesignMode(this))
-        //     {
-        //         _oldManager = GetManager();
-        //         if (_oldManager != null)
-        //             _oldManager.DragPaneServices.Register(this);
-        //     }
-        // }
+        protected void AddDragPaneReferences()
+        {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _oldManager = GetManager();
+                if (_oldManager != null)
+                    _oldManager.DragPaneServices.Register(this);
+            }
+        }
         #endregion
 
         protected abstract bool IsSurfaceVisible

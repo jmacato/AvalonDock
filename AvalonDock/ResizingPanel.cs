@@ -26,16 +26,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
-using Avalonia.Markup;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Windows.Markup;
 using System.Diagnostics;
 using System.Linq;
 
@@ -61,17 +61,17 @@ namespace AvalonDock
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(ResizingPanel), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure, OnOrientationChanged));
 
-        static void OnOrientationChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ResizingPanel)d).splitterListIsDirty = true;
         }
 
-        public static GridLength GetResizeWidth(AvaloniaObject obj)
+        public static GridLength GetResizeWidth(DependencyObject obj)
         {
             return (GridLength)obj.GetValue(ResizeWidthProperty);
         }
 
-        public static void SetResizeWidth(AvaloniaObject obj, GridLength value)
+        public static void SetResizeWidth(DependencyObject obj, GridLength value)
         {
             obj.SetValue(ResizeWidthProperty, value);
         }
@@ -86,12 +86,12 @@ namespace AvalonDock
                 OnCoerceSplitSize),
                 new ValidateValueCallback(IsSplitSizeValid));
 
-        public static GridLength GetResizeHeight(AvaloniaObject obj)
+        public static GridLength GetResizeHeight(DependencyObject obj)
         {
             return (GridLength)obj.GetValue(ResizeHeightProperty);
         }
 
-        public static void SetResizeHeight(AvaloniaObject obj, GridLength value)
+        public static void SetResizeHeight(DependencyObject obj, GridLength value)
         {
             obj.SetValue(ResizeHeightProperty, value);
         }
@@ -106,14 +106,14 @@ namespace AvalonDock
                 OnCoerceSplitSize),
                 new ValidateValueCallback(IsSplitSizeValid));
 
-        static void OnSplitSizeChanged(AvaloniaObject sender, DependencyPropertyChangedEventArgs e)
+        static void OnSplitSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             ResizingPanel parentPanel = LogicalTreeHelper.GetParent(sender) as ResizingPanel;
             if (parentPanel != null)
                 parentPanel.InvalidateMeasure();
         }
 
-        static object OnCoerceSplitSize(AvaloniaObject sender, object value)
+        static object OnCoerceSplitSize(DependencyObject sender, object value)
         {
             GridLength gd = (GridLength)value;
 
@@ -131,12 +131,12 @@ namespace AvalonDock
 
 
 
-        public static Size GetEffectiveSize(AvaloniaObject obj)
+        public static Size GetEffectiveSize(DependencyObject obj)
         {
             return (Size)obj.GetValue(EffectiveSizeProperty);
         }
 
-        public static void SetEffectiveSize(AvaloniaObject obj, Size value)
+        public static void SetEffectiveSize(DependencyObject obj, Size value)
         {
             obj.SetValue(EffectiveSizeProperty, value);
         }
@@ -862,7 +862,7 @@ namespace AvalonDock
             setupSplitters = false;
         }
 
-        protected override void OnVisualChildrenChanged(AvaloniaObject visualAdded, AvaloniaObject visualRemoved)
+        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 
@@ -887,7 +887,7 @@ namespace AvalonDock
                 trToWnd.Transform(new Point());
             
 
-            if (Orientation == Avalonia.Controls.Orientation.Horizontal)
+            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
             {
                 Canvas.SetLeft(_resizerGhost, _initialStartPoint.X + transformedDelta.X);
             }
@@ -1374,7 +1374,7 @@ namespace AvalonDock
 
             Size actualSize = this.TransformedActualSize();
 
-            if (Orientation == Avalonia.Controls.Orientation.Horizontal)
+            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
             {
                 _resizerGhost.Width = 5.0;
                 _resizerGhost.Height = actualSize.Height;
@@ -1387,7 +1387,7 @@ namespace AvalonDock
 
             _initialStartPoint = splitter.PointToScreenDPI(new Point()) - this.PointToScreenDPI(new Point());
 
-            if (Orientation == Avalonia.Controls.Orientation.Horizontal)
+            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
             {
                 Canvas.SetLeft(_resizerGhost, _initialStartPoint.X);
             }
@@ -1398,8 +1398,8 @@ namespace AvalonDock
 
             Canvas panelHostResizer = new Canvas() 
             { 
-                HorizontalAlignment = Avalonia.HorizontalAlignment.Stretch,
-                VerticalAlignment = Avalonia.VerticalAlignment.Stretch
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch
             };
 
             panelHostResizer.Children.Add(_resizerGhost);
@@ -1408,7 +1408,7 @@ namespace AvalonDock
             _resizerWindowHost = new Window()
             {
                 ResizeMode = ResizeMode.NoResize,
-                WindowStyle = Avalonia.WindowStyle.None,
+                WindowStyle = System.Windows.WindowStyle.None,
                 ShowInTaskbar = false,
                 AllowsTransparency = true,
                 Background = null,

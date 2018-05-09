@@ -26,21 +26,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.ComponentModel;
-using Avalonia.Markup;
+using System.Windows.Markup;
 using System.Diagnostics;
-using Avalonia.Threading;
-using Avalonia.Media.Animation;
-using Avalonia.Interop;
+using System.Windows.Threading;
+using System.Windows.Media.Animation;
+using System.Windows.Interop;
 using System.Linq;
 
 namespace AvalonDock
@@ -227,8 +227,8 @@ namespace AvalonDock
                 case WM_NCLBUTTONDBLCLK: //Left Button Double Click -> Maximixe/Normal
                     if (e.WParam.ToInt32() == HTCAPTION)
                     {
-                        WindowState = WindowState == Avalonia.WindowState.Maximized ?
-                            Avalonia.WindowState.Normal : Avalonia.WindowState.Maximized;
+                        WindowState = WindowState == System.Windows.WindowState.Maximized ?
+                            System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
                         e.Handled = true;
                     }
                     break;
@@ -266,12 +266,12 @@ namespace AvalonDock
             return base.OpenContextMenu(popupButton, ptMouse);
         }
 
-        static void OnContentPropertyChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        static void OnContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
         }
 
-        static object OnCoerceValueContentProperty(AvaloniaObject d, object baseValue)
+        static object OnCoerceValueContentProperty(DependencyObject d, object baseValue)
         {
             DocumentFloatingWindow fl = ((DocumentFloatingWindow)d);
 

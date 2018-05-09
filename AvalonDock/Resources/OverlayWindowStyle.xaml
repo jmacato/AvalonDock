@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary 
-    xmlns="https://github.com/avaloniaui"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock"    
     >
-    <Style Selector="ad|OverlayWindow">
+    <Style x:Key="{x:Type ad:OverlayWindow}" TargetType="{x:Type ad:OverlayWindow}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="{x:Type ad:OverlayWindow}">
                     <Grid SnapsToDevicePixels="True" Opacity="0.9">
                         <Canvas>
                         <Border x:Name="PART_SelectionBox" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" BorderBrush="Gray" BorderThickness="3" Opacity="0.2" Visibility="Hidden"/>

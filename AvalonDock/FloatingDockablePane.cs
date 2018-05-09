@@ -26,10 +26,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
+using System.Windows;
 using System.Linq;
-using Avalonia.Data;
-using Avalonia.Media;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace AvalonDock
 {

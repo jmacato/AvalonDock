@@ -26,8 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Input;
+using System.Windows;
+using System.Windows.Input;
 
 namespace AvalonDock
 {

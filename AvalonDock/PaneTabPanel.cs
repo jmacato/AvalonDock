@@ -26,23 +26,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Linq;
-using Avalonia.Markup;
+using System.Windows.Markup;
 
 namespace AvalonDock
 {
     public abstract class PaneTabPanel : Panel
     {
-        protected override void OnVisualChildrenChanged(AvaloniaObject visualAdded, AvaloniaObject visualRemoved)
+        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 
@@ -84,7 +84,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the TabItemStyle property.
         /// </summary>
-        private static void OnTabItemStyleChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTabItemStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((PaneTabPanel)d).OnTabItemStyleChanged(e);
         }

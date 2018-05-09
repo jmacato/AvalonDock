@@ -26,14 +26,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Interop;
 using System.ComponentModel;
 using System.IO;
 using System.Xml;
@@ -262,7 +265,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the ActiveDocument property.
         /// </summary>
-        private static void OnActiveDocumentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnActiveDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DockingManager)d).OnActiveDocumentChanged(e);
         }
@@ -301,7 +304,7 @@ namespace AvalonDock
         /// <summary>
         /// Coerces the ActiveDocument value.
         /// </summary>
-        private static object CoerceActiveDocumentValue(AvaloniaObject d, object value)
+        private static object CoerceActiveDocumentValue(DependencyObject d, object value)
         {
             var contentToCoerce = value as ManagedContent;
             if (contentToCoerce != null &&
@@ -348,7 +351,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the ActiveContent property.
         /// </summary>
-        private static void OnActiveContentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnActiveContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DockingManager)d).OnActiveContentChanged(e);
         }
@@ -381,7 +384,7 @@ namespace AvalonDock
         /// <summary>
         /// Coerces the ActiveContent value.
         /// </summary>
-        private static object CoerceActiveContentValue(AvaloniaObject d, object value)
+        private static object CoerceActiveContentValue(DependencyObject d, object value)
         {
             return value;
         }
@@ -698,7 +701,7 @@ namespace AvalonDock
             if (!_allowRefreshContents)
                 return;
 
-            var contentsFoundUnderMe = new LogicalTreeAdapter(this).Descendants<AvaloniaObject>().Where(d => d.Item is ManagedContent).Select(d => d.Item).Cast<ManagedContent>();
+            var contentsFoundUnderMe = new LogicalTreeAdapter(this).Descendants<DependencyObject>().Where(d => d.Item is ManagedContent).Select(d => d.Item).Cast<ManagedContent>();
             var contentsFoundInFloatingMode = _floatingWindows.SelectMany(d => d.HostedPane.Items.Cast<ManagedContent>());
             DockableContent contentFoundInFlyoutMode = null;
             
@@ -739,7 +742,7 @@ namespace AvalonDock
             if (MainDocumentPane == null ||
                 MainDocumentPane.GetManager() != this)
             {
-                ILinqToTree<AvaloniaObject> itemFound = new LogicalTreeAdapter(this).Descendants<AvaloniaObject>().FirstOrDefault(d => d.Item is DocumentPane);
+                ILinqToTree<DependencyObject> itemFound = new LogicalTreeAdapter(this).Descendants<DependencyObject>().FirstOrDefault(d => d.Item is DocumentPane);
                 
                 MainDocumentPane = itemFound != null ? itemFound.Item as DocumentPane : null;
             }
@@ -755,7 +758,7 @@ namespace AvalonDock
             while (true)
             {
                 bool foundEmptyPaneToRemove = false;
-                var emptyDockablePanes = new LogicalTreeAdapter(this).Descendants<AvaloniaObject>().Where(i => (i.Item is DockablePane) && (i.Item as DockablePane).Items.Count == 0).Select(i => i.Item).Cast<DockablePane>().ToArray();
+                var emptyDockablePanes = new LogicalTreeAdapter(this).Descendants<DependencyObject>().Where(i => (i.Item is DockablePane) && (i.Item as DockablePane).Items.Count == 0).Select(i => i.Item).Cast<DockablePane>().ToArray();
 
                 emptyDockablePanes.ForEach(dp =>
                 {
@@ -1715,7 +1718,7 @@ namespace AvalonDock
         void CheckForSingleChildPanels()
         {
             //Debug.Assert(!
-            //new LogicalTreeAdapter(this).Descendants<AvaloniaObject>().Any(
+            //new LogicalTreeAdapter(this).Descendants<DependencyObject>().Any(
             //    di => di.Item is ResizingPanel && ((ResizingPanel)di.Item).Children.Count == 1)
             //);
         }
@@ -2022,7 +2025,7 @@ namespace AvalonDock
                         //find the the pane which the desidered anchor style
                         //DockablePane foundPane = this.FindChildDockablePane(desideredAnchor != AnchorStyle.None ? desideredAnchor : AnchorStyle.Right);
                         //first search for a pane with other contents (avoiding empty panes which are containers for hidden contents)
-                        ILinqToTree<AvaloniaObject> itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).IsDocked);
+                        ILinqToTree<DependencyObject> itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).IsDocked);
 
                         if (itemFound == null)//search for all panes (even empty)
                             itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).Items.Count == 0);
@@ -2220,7 +2223,7 @@ namespace AvalonDock
                         if (desideredState == DockableContentState.Docked)
                         {
                             //first not empty panes
-                            ILinqToTree<AvaloniaObject> itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).IsDocked);
+                            ILinqToTree<DependencyObject> itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).IsDocked);
 
                             if (itemFound == null)//look for all panes even empty
                                 itemFound = new LogicalTreeAdapter(this).Descendants().FirstOrDefault(el => el.Item is DockablePane && (el.Item as DockablePane).Anchor == desideredAnchor && (el.Item as DockablePane).Items.Count == 0);

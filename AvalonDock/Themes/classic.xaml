@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary 
-    xmlns="https://github.com/avaloniaui"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock">
     

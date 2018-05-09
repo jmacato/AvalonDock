@@ -26,20 +26,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Xml;
-using Avalonia.Forms.Integration;
+using System.Windows.Forms.Integration;
 using System.Diagnostics;
-using Avalonia.Threading;
+using System.Windows.Threading;
 using System.Threading;
 using System.Reflection;
 using System.Net.Cache;
@@ -59,7 +59,7 @@ namespace AvalonDock
             WidthProperty.OverrideMetadata(typeof(ManagedContent), new FrameworkPropertyMetadata(double.NaN, null, new CoerceValueCallback(
                 (s, v) =>
                 {
-                    if (!DesignerProperties.GetIsInDesignMode(s as AvaloniaObject))
+                    if (!DesignerProperties.GetIsInDesignMode(s as DependencyObject))
                         return double.NaN;
 
                     return v;
@@ -67,7 +67,7 @@ namespace AvalonDock
             HeightProperty.OverrideMetadata(typeof(ManagedContent), new FrameworkPropertyMetadata(double.NaN, null, new CoerceValueCallback(
                 (s, v) =>
                 {
-                    if (!DesignerProperties.GetIsInDesignMode(s as AvaloniaObject))
+                    if (!DesignerProperties.GetIsInDesignMode(s as DependencyObject))
                         return double.NaN;
 
                     return v;
@@ -185,7 +185,7 @@ namespace AvalonDock
         DependencyProperty.Register("Icon", typeof(ImageSource), typeof(ManagedContent),
             new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerce_Icon)));
 
-        private static object OnCoerce_Icon(AvaloniaObject o, object value)
+        private static object OnCoerce_Icon(DependencyObject o, object value)
         {
             //if (value is string)
             //{
@@ -316,7 +316,7 @@ namespace AvalonDock
             if (!e.Handled && Manager != null)// && State != DockableContentState.AutoHide)
             {
                 isMouseDown = true;
-                ptStartDrag = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
+                ptStartDrag = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
             }
         }
 
@@ -339,7 +339,7 @@ namespace AvalonDock
             {
                 if (!IsMouseCaptured)
                 {
-                    Point ptMouseMove = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
+                    Point ptMouseMove = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
                     ManagedContent contentToSwap = null;
                     if (ContainerPane != null)
                     {
@@ -403,7 +403,7 @@ namespace AvalonDock
             if (!e.Handled)
             {
                 Activate();
-                //FocusManager.SetFocusedElement(Content as AvaloniaObject, DefaultElement);
+                //FocusManager.SetFocusedElement(Content as DependencyObject, DefaultElement);
                 //IInputElement focusedElement = e.Source as IInputElement;
                 //if (focusedElement != null) Keyboard.Focus(focusedElement);
             }
@@ -451,7 +451,7 @@ namespace AvalonDock
             return null;
         }
 
-        protected override void OnVisualParentChanged(AvaloniaObject oldParent)
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             RaisePropertyChanged("ContainerPane");
             base.OnVisualParentChanged(oldParent);
@@ -554,7 +554,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the IsActiveContent property.
         /// </summary>
-        private static void OnIsActiveContentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsActiveContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnIsActiveContentChanged(e);
         }
@@ -657,7 +657,7 @@ namespace AvalonDock
                                         Debug.WriteLine("No focused element");
 
                                 }
-                                else if (Content is UIElement && Content is AvaloniaObject)
+                                else if (Content is UIElement && Content is DependencyObject)
                                 {
                                     Debug.WriteLine("Try to set kb focus to " + this.Content.ToString());
                                     (Content as UIElement).Focus();
@@ -715,7 +715,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the IsActiveDocument property.
         /// </summary>
-        private static void OnIsActiveDocumentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsActiveDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnIsActiveDocumentChanged(e);
         }
@@ -797,7 +797,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the FloatingWindowSize property.
         /// </summary>
-        private static void OnFloatingWindowSizeChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnFloatingWindowSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnFloatingWindowSizeChanged(e);
         }

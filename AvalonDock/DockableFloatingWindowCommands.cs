@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Avalonia.Input;
+using System.Windows.Input;
 
 namespace AvalonDock
 {

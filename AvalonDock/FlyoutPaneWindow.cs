@@ -26,23 +26,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.ComponentModel;
-using Avalonia.Markup;
+using System.Windows.Markup;
 using System.Diagnostics;
-using Avalonia.Threading;
-using Avalonia.Media.Animation;
-using Avalonia.Forms.Integration;
+using System.Windows.Threading;
+using System.Windows.Media.Animation;
+using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
-using Avalonia.Interop;
+using System.Windows.Interop;
 using System.Threading;
 
 namespace AvalonDock
@@ -368,8 +368,8 @@ namespace AvalonDock
 
             Canvas panelHostResizer = new Canvas()
             {
-                HorizontalAlignment = Avalonia.HorizontalAlignment.Stretch,
-                VerticalAlignment = Avalonia.VerticalAlignment.Stretch
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch
             };
 
             panelHostResizer.Children.Add(_resizerGhost);
@@ -377,7 +377,7 @@ namespace AvalonDock
             _resizerWindowHost = new Window()
             {
                 ResizeMode = ResizeMode.NoResize,
-                WindowStyle = Avalonia.WindowStyle.None,
+                WindowStyle = System.Windows.WindowStyle.None,
                 ShowInTaskbar = false,
                 AllowsTransparency = true,
                 Background = null,

@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary 
-    xmlns="https://github.com/avaloniaui"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock"
     >
@@ -35,7 +35,35 @@
                                         Background="{StaticResource ManagedContentTabItemSelectedBorderBackround}"
                                         Visibility="Hidden"
                                         />
-                    </Grid> 
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Anchor" >
+                            <Trigger.Value>
+                                <ad:AnchorStyle>
+                                    Left
+                                </ad:AnchorStyle>
+                            </Trigger.Value>
+                            <Setter TargetName="PART_Border" Property="CornerRadius" Value="3,3,0,0"/>
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource ManagedContentTabItemInvNormalBackground}"/>
+                            <Setter TargetName="HighlightBorder" Property="CornerRadius" Value="3,3,0,0"/>
+                            <Setter Property="VerticalAlignment" Value="Top" TargetName="HighlightBorder"/>
+                        </Trigger>
+                        <Trigger Property="Anchor">
+                            <Trigger.Value>
+                                <ad:AnchorStyle>
+                                    Bottom
+                                </ad:AnchorStyle>
+                            </Trigger.Value>
+                            <Setter TargetName="PART_Border" Property="CornerRadius" Value="3,3,0,0"/>
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource ManagedContentTabItemInvNormalBackground}"/>
+                            <Setter TargetName="HighlightBorder" Property="CornerRadius" Value="3,3,0,0"/>
+                            <Setter Property="VerticalAlignment" Value="Top" TargetName="HighlightBorder"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="HighlightBorder"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

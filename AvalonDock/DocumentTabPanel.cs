@@ -27,15 +27,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Diagnostics;
 using System.ComponentModel;
 
@@ -44,12 +44,12 @@ namespace AvalonDock
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class DocumentTabPanel : PaneTabPanel
     {
-        public static bool GetIsHeaderVisible(AvaloniaObject obj)
+        public static bool GetIsHeaderVisible(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsHeaderVisibleProperty);
         }
 
-        public static void SetIsHeaderVisible(AvaloniaObject obj, bool value)
+        public static void SetIsHeaderVisible(DependencyObject obj, bool value)
         {
             obj.SetValue(IsHeaderVisibleProperty, value);
         }

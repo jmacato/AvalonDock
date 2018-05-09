@@ -26,15 +26,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Navigation;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -150,7 +150,7 @@ namespace AvalonDock
         DockingManager _manager;
         internal NavigatorWindow(DockingManager manager)
         {
-            WindowStartupLocation = Avalonia.WindowStartupLocation.CenterOwner;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
 
             _manager = manager;
 

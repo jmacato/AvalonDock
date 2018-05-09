@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Media;
-using Avalonia.Controls;
-using Avalonia.Threading;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Threading;
 using System.Threading;
 
 namespace AvalonDock
@@ -63,30 +63,30 @@ namespace AvalonDock
             return element.PointToScreenDPI(point);
         }
 
-        public static T FindVisualAncestor<T>(this Avalonia.VisualTree.IVisual obj, bool includeThis) where T : AvaloniaObject
+        public static T FindVisualAncestor<T>(this DependencyObject obj, bool includeThis) where T : DependencyObject
         {
             if (!includeThis)
-                obj = Avalonia.VisualTree.VisualExtensions.GetVisualParent(obj);
+                obj = VisualTreeHelper.GetParent(obj);
 
             while (obj != null && (!(obj is T)))
             {
-                obj = Avalonia.VisualTree.VisualExtensions.GetVisualParent(obj);
+                obj = VisualTreeHelper.GetParent(obj);
             }
 
             return obj as T;
         }
 
-        public static bool IsLogicalChildContained<T>(this Avalonia.LogicalTree.ILogical obj) 
+        public static bool IsLogicalChildContained<T>(this DependencyObject obj) where T : DependencyObject
         {
-            foreach (object child in Avalonia.LogicalTree.LogicalExtensions.GetLogicalChildren(obj))
+            foreach (object child in LogicalTreeHelper.GetChildren(obj))
             {
                 if (child is T)
                     return true;
 
-                if (child is Avalonia.LogicalTree.ILogical)
+                if (child is DependencyObject)
                 {
 
-                    bool res = child.IsLogicalChildContained<T>();
+                    bool res = (child as DependencyObject).IsLogicalChildContained<T>();
                     if (res)
                         return true;
                 }
@@ -95,16 +95,16 @@ namespace AvalonDock
             return false;
         }
 
-        public static T GetLogicalChildContained<T>(this AvaloniaObject obj) where T : AvaloniaObject
+        public static T GetLogicalChildContained<T>(this DependencyObject obj) where T : DependencyObject
         {
             foreach (object child in LogicalTreeHelper.GetChildren(obj))
             {
                 if (child is T)
                     return child as T;
 
-                if (child is AvaloniaObject)
+                if (child is DependencyObject)
                 {
-                    T childFound = (child as AvaloniaObject).GetLogicalChildContained<T>();
+                    T childFound = (child as DependencyObject).GetLogicalChildContained<T>();
                     if (childFound != null)
                         return childFound;
                 }
@@ -113,16 +113,16 @@ namespace AvalonDock
             return null;
         }
 
-        public static T FindAnotherLogicalChildContained<T>(this AvaloniaObject obj, UIElement childToExclude) where T : AvaloniaObject
+        public static T FindAnotherLogicalChildContained<T>(this DependencyObject obj, UIElement childToExclude) where T : DependencyObject
         {
             foreach (object child in LogicalTreeHelper.GetChildren(obj))
             {
                 if (child is T && child != childToExclude)
                     return child as T;
 
-                if (child is AvaloniaObject)
+                if (child is DependencyObject)
                 {
-                    T childFound = (child as AvaloniaObject).FindAnotherLogicalChildContained<T>(childToExclude);
+                    T childFound = (child as DependencyObject).FindAnotherLogicalChildContained<T>(childToExclude);
                     if (childFound != null)
                         return childFound;
                 }
@@ -169,7 +169,7 @@ namespace AvalonDock
 
         public static Point TransformToDeviceDPI(this Visual visual, Point pt)
         {
-            Matrix m = FromVisual(visual).CompositionTarget.TransformToDevice;
+            Matrix m = PresentationSource.FromVisual(visual).CompositionTarget.TransformToDevice;
             return new Point(pt.X / m.M11, pt.Y /m.M22);
         }
 

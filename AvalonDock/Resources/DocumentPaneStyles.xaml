@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary 
-    xmlns="https://github.com/avaloniaui"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock">
     
@@ -82,7 +82,45 @@
                         </Grid>
                         
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Selector.IsSelected" Value="True">
+                            <Setter Property="Background" 
+                                    TargetName="tabItemIntBorder" 
+                                    Value="{DynamicResource {ComponentResourceKey {x:Type ad:DockingManager}, {x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundSelected}}}"
+                                    />
+                            <Setter Property="Fill" 
+                                    TargetName="tabItemIntPathBackground" 
+                                    Value="{DynamicResource {ComponentResourceKey {x:Type ad:DockingManager}, {x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundSelected}}}"
+                                    />
+                            <Setter Property="BorderBrush" TargetName="tabItemIntBorder" Value="#FFC1D2EE"/>
+                            <Setter Property="Stroke" TargetName="tabItemIntPathBorder" Value="#FFC1D2EE"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=IsActiveDocument, RelativeSource={RelativeSource Self}}" Value="True"> 
+                            <Setter Property="TextBlock.FontWeight" TargetName="tabItemTitle" Value="Bold"/>
+                        </DataTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="tabItemIntBorder" Value="True"/>
+                                <Condition Property="Selector.IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" 
+                                    TargetName="tabItemIntBorder" 
+                                    Value="{DynamicResource {ComponentResourceKey {x:Type ad:DockingManager}, {x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundMouseOver}}}"
+                                    />
+                            <Setter Property="Fill" 
+                                    TargetName="tabItemIntPathBackground" 
+                                    Value="{DynamicResource {ComponentResourceKey {x:Type ad:DockingManager}, {x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundMouseOver}}}"
+                                    />
+                        </MultiTrigger>
+                        <Trigger Property="IsLocked" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="PART_LockedIcon"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=IsLocked, RelativeSource={RelativeSource Self}}" Value="True">
+							<Setter Property="Visibility" Value="Visible" TargetName="PART_LockedIcon"/>
+						</DataTrigger>
 
+					</ControlTemplate.Triggers>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

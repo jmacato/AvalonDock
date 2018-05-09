@@ -26,20 +26,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
-using Avalonia.Documents;
-using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Shapes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
-using Avalonia.Threading;
+using System.Windows.Threading;
 using System.Threading;
 
 namespace AvalonDock
@@ -392,7 +392,7 @@ namespace AvalonDock
                 if (((DockableContent)SelectedItem).State != DockableContentState.AutoHide)
                 {
                     //ptStartDrag = e.MouseDevice.GetPosition(this);
-                    ptStartDrag = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
+                    ptStartDrag = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
                    
                     isMouseDown = true;
                 }
@@ -402,7 +402,7 @@ namespace AvalonDock
         protected virtual void OnHeaderMouseMove(object sender, MouseEventArgs e)
         {
             //Point ptMouseMove = e.GetPosition(this);
-            Point ptMouseMove = e.GetPosition((IInputElement)Avalonia.Media.VisualTreeHelper.GetParent(this));
+            Point ptMouseMove = e.GetPosition((IInputElement)System.Windows.Media.VisualTreeHelper.GetParent(this));
                    
 
             if (!e.Handled && isMouseDown && e.LeftButton == MouseButtonState.Pressed)

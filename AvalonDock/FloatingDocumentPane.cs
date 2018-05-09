@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Avalonia;
-using Avalonia.Data;
-using Avalonia.Media;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace AvalonDock
 {
