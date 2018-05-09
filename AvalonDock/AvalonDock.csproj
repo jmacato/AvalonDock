@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Adolfo Marinucci;Jumar A. Macato</Authors>
-    <Copyright>Copyright 2007 Adolfo Marinucci;Copyright 2018 Jumar A. Macato</Copyright>
+    <Authors>Adolfo Marinucci; Jumar A. Macato</Authors>
+    <Copyright>Copyright 2007 Adolfo Marinucci; Copyright 2018 Jumar A. Macato</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.6.1" />
