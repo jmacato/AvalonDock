@@ -17,7 +17,7 @@ namespace AvalonDock
         /// </summary>
         /// <param name="target">UIElement or ContentElement on which to raise the event</param>
         /// <param name="args">RoutedEventArgs to use when raising the event</param>
-        internal static void RaiseEvent(DependencyObject target, RoutedEventArgs args)
+        internal static void RaiseEvent(AvaloniaObject target, RoutedEventArgs args)
         {
             if (target is UIElement)
             {
@@ -36,7 +36,7 @@ namespace AvalonDock
         /// <param name="element">UIElement or ContentElement that listens to the event</param>
         /// <param name="routedEvent">Event that will be handled</param>
         /// <param name="handler">Event handler to be added</param>
-        internal static void AddHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
+        internal static void AddHandler(AvaloniaObject element, RoutedEvent routedEvent, Delegate handler)
         {
             UIElement uie = element as UIElement;
             if (uie != null)
@@ -60,7 +60,7 @@ namespace AvalonDock
         /// <param name="element">UIElement or ContentElement that listens to the event</param>
         /// <param name="routedEvent">Event that will no longer be handled</param>
         /// <param name="handler">Event handler to be removed</param>
-        internal static void RemoveHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
+        internal static void RemoveHandler(AvaloniaObject element, RoutedEvent routedEvent, Delegate handler)
         {
             UIElement uie = element as UIElement;
             if (uie != null)

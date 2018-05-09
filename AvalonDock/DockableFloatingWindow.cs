@@ -131,7 +131,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the IsDockableWindow property.
         /// </summary>
-        private static void OnIsDockableWindowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsDockableWindowChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DockableFloatingWindow)d).OnIsDockableWindowChanged(e);
         }
@@ -253,12 +253,12 @@ namespace AvalonDock
             base.FilterMessage(sender, e);
         }
 
-        static void OnContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnContentPropertyChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
         
         }
 
-        static object OnCoerceValueContentProperty(DependencyObject d, object baseValue)
+        static object OnCoerceValueContentProperty(AvaloniaObject d, object baseValue)
         {
             DockableFloatingWindow fl = ((DockableFloatingWindow)d);
 

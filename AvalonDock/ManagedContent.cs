@@ -59,7 +59,7 @@ namespace AvalonDock
             WidthProperty.OverrideMetadata(typeof(ManagedContent), new FrameworkPropertyMetadata(double.NaN, null, new CoerceValueCallback(
                 (s, v) =>
                 {
-                    if (!DesignerProperties.GetIsInDesignMode(s as DependencyObject))
+                    if (!DesignerProperties.GetIsInDesignMode(s as AvaloniaObject))
                         return double.NaN;
 
                     return v;
@@ -67,7 +67,7 @@ namespace AvalonDock
             HeightProperty.OverrideMetadata(typeof(ManagedContent), new FrameworkPropertyMetadata(double.NaN, null, new CoerceValueCallback(
                 (s, v) =>
                 {
-                    if (!DesignerProperties.GetIsInDesignMode(s as DependencyObject))
+                    if (!DesignerProperties.GetIsInDesignMode(s as AvaloniaObject))
                         return double.NaN;
 
                     return v;
@@ -185,7 +185,7 @@ namespace AvalonDock
         DependencyProperty.Register("Icon", typeof(ImageSource), typeof(ManagedContent),
             new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerce_Icon)));
 
-        private static object OnCoerce_Icon(DependencyObject o, object value)
+        private static object OnCoerce_Icon(AvaloniaObject o, object value)
         {
             //if (value is string)
             //{
@@ -403,7 +403,7 @@ namespace AvalonDock
             if (!e.Handled)
             {
                 Activate();
-                //FocusManager.SetFocusedElement(Content as DependencyObject, DefaultElement);
+                //FocusManager.SetFocusedElement(Content as AvaloniaObject, DefaultElement);
                 //IInputElement focusedElement = e.Source as IInputElement;
                 //if (focusedElement != null) Keyboard.Focus(focusedElement);
             }
@@ -451,7 +451,7 @@ namespace AvalonDock
             return null;
         }
 
-        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        protected override void OnVisualParentChanged(AvaloniaObject oldParent)
         {
             RaisePropertyChanged("ContainerPane");
             base.OnVisualParentChanged(oldParent);
@@ -554,7 +554,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the IsActiveContent property.
         /// </summary>
-        private static void OnIsActiveContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsActiveContentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnIsActiveContentChanged(e);
         }
@@ -657,7 +657,7 @@ namespace AvalonDock
                                         Debug.WriteLine("No focused element");
 
                                 }
-                                else if (Content is UIElement && Content is DependencyObject)
+                                else if (Content is UIElement && Content is AvaloniaObject)
                                 {
                                     Debug.WriteLine("Try to set kb focus to " + this.Content.ToString());
                                     (Content as UIElement).Focus();
@@ -715,7 +715,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the IsActiveDocument property.
         /// </summary>
-        private static void OnIsActiveDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsActiveDocumentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnIsActiveDocumentChanged(e);
         }
@@ -797,7 +797,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the FloatingWindowSize property.
         /// </summary>
-        private static void OnFloatingWindowSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnFloatingWindowSizeChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ManagedContent)d).OnFloatingWindowSizeChanged(e);
         }

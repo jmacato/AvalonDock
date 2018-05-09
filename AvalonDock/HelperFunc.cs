@@ -63,30 +63,30 @@ namespace AvalonDock
             return element.PointToScreenDPI(point);
         }
 
-        public static T FindVisualAncestor<T>(this DependencyObject obj, bool includeThis) where T : DependencyObject
+        public static T FindVisualAncestor<T>(this Avalonia.VisualTree.IVisual obj, bool includeThis) where T : AvaloniaObject
         {
             if (!includeThis)
-                obj = VisualTreeHelper.GetParent(obj);
+                obj = Avalonia.VisualTree.VisualExtensions.GetVisualParent(obj);
 
             while (obj != null && (!(obj is T)))
             {
-                obj = VisualTreeHelper.GetParent(obj);
+                obj = Avalonia.VisualTree.VisualExtensions.GetVisualParent(obj);
             }
 
             return obj as T;
         }
 
-        public static bool IsLogicalChildContained<T>(this DependencyObject obj) where T : DependencyObject
+        public static bool IsLogicalChildContained<T>(this Avalonia.LogicalTree.ILogical obj) 
         {
-            foreach (object child in LogicalTreeHelper.GetChildren(obj))
+            foreach (object child in Avalonia.LogicalTree.LogicalExtensions.GetLogicalChildren(obj))
             {
                 if (child is T)
                     return true;
 
-                if (child is DependencyObject)
+                if (child is Avalonia.LogicalTree.ILogical)
                 {
 
-                    bool res = (child as DependencyObject).IsLogicalChildContained<T>();
+                    bool res = child.IsLogicalChildContained<T>();
                     if (res)
                         return true;
                 }
@@ -95,16 +95,16 @@ namespace AvalonDock
             return false;
         }
 
-        public static T GetLogicalChildContained<T>(this DependencyObject obj) where T : DependencyObject
+        public static T GetLogicalChildContained<T>(this AvaloniaObject obj) where T : AvaloniaObject
         {
             foreach (object child in LogicalTreeHelper.GetChildren(obj))
             {
                 if (child is T)
                     return child as T;
 
-                if (child is DependencyObject)
+                if (child is AvaloniaObject)
                 {
-                    T childFound = (child as DependencyObject).GetLogicalChildContained<T>();
+                    T childFound = (child as AvaloniaObject).GetLogicalChildContained<T>();
                     if (childFound != null)
                         return childFound;
                 }
@@ -113,16 +113,16 @@ namespace AvalonDock
             return null;
         }
 
-        public static T FindAnotherLogicalChildContained<T>(this DependencyObject obj, UIElement childToExclude) where T : DependencyObject
+        public static T FindAnotherLogicalChildContained<T>(this AvaloniaObject obj, UIElement childToExclude) where T : AvaloniaObject
         {
             foreach (object child in LogicalTreeHelper.GetChildren(obj))
             {
                 if (child is T && child != childToExclude)
                     return child as T;
 
-                if (child is DependencyObject)
+                if (child is AvaloniaObject)
                 {
-                    T childFound = (child as DependencyObject).FindAnotherLogicalChildContained<T>(childToExclude);
+                    T childFound = (child as AvaloniaObject).FindAnotherLogicalChildContained<T>(childToExclude);
                     if (childFound != null)
                         return childFound;
                 }
@@ -169,7 +169,7 @@ namespace AvalonDock
 
         public static Point TransformToDeviceDPI(this Visual visual, Point pt)
         {
-            Matrix m = PresentationSource.FromVisual(visual).CompositionTarget.TransformToDevice;
+            Matrix m = FromVisual(visual).CompositionTarget.TransformToDevice;
             return new Point(pt.X / m.M11, pt.Y /m.M22);
         }
 

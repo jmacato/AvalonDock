@@ -77,7 +77,7 @@ namespace AvalonDock
         /// </summary>
         /// <param name="depObj"></param>
         /// <param name="e"></param>
-        static void OnPaneAttached(DependencyObject depObj, DependencyPropertyChangedEventArgs e)
+        static void OnPaneAttached(AvaloniaObject depObj, DependencyPropertyChangedEventArgs e)
         {
             //Update Anchor, Title and Icon property 
             DockablePaneAnchorTab _this = depObj as DockablePaneAnchorTab;

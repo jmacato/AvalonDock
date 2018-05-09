@@ -56,7 +56,7 @@ namespace AvalonDock
             set { _pane = value; }
         }
 
-        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        protected override void OnVisualChildrenChanged(AvaloniaObject visualAdded, AvaloniaObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
         }

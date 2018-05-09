@@ -44,12 +44,12 @@ namespace AvalonDock
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class DocumentTabPanel : PaneTabPanel
     {
-        public static bool GetIsHeaderVisible(DependencyObject obj)
+        public static bool GetIsHeaderVisible(AvaloniaObject obj)
         {
             return (bool)obj.GetValue(IsHeaderVisibleProperty);
         }
 
-        public static void SetIsHeaderVisible(DependencyObject obj, bool value)
+        public static void SetIsHeaderVisible(AvaloniaObject obj, bool value)
         {
             obj.SetValue(IsHeaderVisibleProperty, value);
         }

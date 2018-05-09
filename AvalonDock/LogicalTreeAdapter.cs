@@ -82,19 +82,19 @@ namespace AvalonDock
     }
 
     /// <summary>
-    /// An adapter for DependencyObject which implements ILinqToTree in
+    /// An adapter for AvaloniaObject which implements ILinqToTree in
     /// order to allow Linq queries on the visual tree
     /// </summary>
-    internal class VisualTreeAdapter : ILinqToTree<DependencyObject>
+    internal class VisualTreeAdapter : ILinqToTree<AvaloniaObject>
     {
-        private DependencyObject _item;
+        private AvaloniaObject _item;
 
-        public VisualTreeAdapter(DependencyObject item)
+        public VisualTreeAdapter(AvaloniaObject item)
         {
             _item = item;
         }
 
-        public IEnumerable<ILinqToTree<DependencyObject>> Children()
+        public IEnumerable<ILinqToTree<AvaloniaObject>> Children()
         {
             int childrenCount = VisualTreeHelper.GetChildrenCount(_item);
             for (int i = 0; i < childrenCount; i++)
@@ -103,7 +103,7 @@ namespace AvalonDock
             }
         }
 
-        public ILinqToTree<DependencyObject> Parent
+        public ILinqToTree<AvaloniaObject> Parent
         {
             get
             {
@@ -111,7 +111,7 @@ namespace AvalonDock
             }
         }
 
-        public DependencyObject Item
+        public AvaloniaObject Item
         {
             get
             {
@@ -121,28 +121,28 @@ namespace AvalonDock
     }
 
     /// <summary>
-    /// An adapter for DependencyObject which implements ILinqToTree in
+    /// An adapter for AvaloniaObject which implements ILinqToTree in
     /// order to allow Linq queries on the logical tree
     /// </summary>
-    internal class LogicalTreeAdapter : ILinqToTree<DependencyObject>
+    internal class LogicalTreeAdapter : ILinqToTree<AvaloniaObject>
     {
-        private DependencyObject _item;
+        private AvaloniaObject _item;
 
-        public LogicalTreeAdapter(DependencyObject item)
+        public LogicalTreeAdapter(AvaloniaObject item)
         {
             _item = item;
         }
 
-        public IEnumerable<ILinqToTree<DependencyObject>> Children()
+        public IEnumerable<ILinqToTree<AvaloniaObject>> Children()
         {
-            IEnumerable<DependencyObject> children = LogicalTreeHelper.GetChildren(_item).OfType<DependencyObject>();
-            foreach (DependencyObject child in children)
+            IEnumerable<AvaloniaObject> children = LogicalTreeHelper.GetChildren(_item).OfType<AvaloniaObject>();
+            foreach (AvaloniaObject child in children)
             {
                 yield return new LogicalTreeAdapter(child);
             }
         }
 
-        public ILinqToTree<DependencyObject> Parent
+        public ILinqToTree<AvaloniaObject> Parent
         {
             get
             {
@@ -150,7 +150,7 @@ namespace AvalonDock
             }
         }
 
-        public DependencyObject Item
+        public AvaloniaObject Item
         {
             get
             {

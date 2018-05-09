@@ -52,8 +52,11 @@ namespace AvalonDock
         {
             this.AttachedToVisualTree += OnLoaded;
             this.DetachedFromVisualTree += OnUnloaded;
+            this.SelectionChanged += OnSelectionChanged;
+            this.ItemsCollectionChanged
         }
 
+        
         protected virtual void OnLoaded(object sender, VisualTreeAttachmentEventArgs e)
         {
             //if (GetManager() == null && Parent != null)
@@ -68,34 +71,27 @@ namespace AvalonDock
         }
 
         #region Contents management
+ 
+        public static readonly AvaloniaProperty<bool> HasSingleItemProperty =
+            AvaloniaProperty.Register<Pane, bool>(nameof(HasSingleItem));
+
         public bool HasSingleItem
         {
-            get
-            {
-                return (bool)GetValue(HasSingleItemProperty);
-            }
-            protected set { SetValue(HasSingleItemPropertyKey, value); }
+            get { return GetValue(HasSingleItemProperty); }
+            set { SetValue(HasSingleItemProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for HasSingleItem.  This enables animation, styling, binding, etc...
-        private static readonly DependencyPropertyKey HasSingleItemPropertyKey =
-            DependencyProperty.RegisterReadOnly("HasSingleItem", typeof(bool), typeof(Pane), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty HasSingleItemProperty = HasSingleItemPropertyKey.DependencyProperty;
-
         
         ManagedContent _lastSelectedContent = null;
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.RemovedItems != null &&
                 e.RemovedItems.Count > 0 &&
                 e.AddedItems != null &&
                 e.AddedItems.Count > 0)
                 _lastSelectedContent = e.RemovedItems[0] as ManagedContent;
-
-            base.OnSelectionChanged(e);
         }
-
         
         protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -204,6 +200,9 @@ namespace AvalonDock
         public static readonly DependencyProperty ContainsActiveContentProperty
             = ContainsActiveContentPropertyKey.DependencyProperty;
 
+
+        
+
         /// <summary>
         /// Gets the ContainsActiveContent property.  This dependency property 
         /// indicates if this <see cref="Pane"/> contains a <see cref="ManagedContent"/> set as active content into the parent <see cref="DockingManager"/> object. 
@@ -258,27 +257,27 @@ namespace AvalonDock
 
         DockingManager _oldManager = null;
 
-        protected void RemoveDragPaneReferences()
-        {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                if (_oldManager != null)
-                {
-                    _oldManager.DragPaneServices.Unregister(this);
-                    _oldManager = null;
-                }
-            }
-        }
+        // protected void RemoveDragPaneReferences()
+        // {
+        //     if (!DesignerProperties.GetIsInDesignMode(this))
+        //     {
+        //         if (_oldManager != null)
+        //         {
+        //             _oldManager.DragPaneServices.Unregister(this);
+        //             _oldManager = null;
+        //         }
+        //     }
+        // }
 
-        protected void AddDragPaneReferences()
-        {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                _oldManager = GetManager();
-                if (_oldManager != null)
-                    _oldManager.DragPaneServices.Register(this);
-            }
-        }
+        // protected void AddDragPaneReferences()
+        // {
+        //     if (!DesignerProperties.GetIsInDesignMode(this))
+        //     {
+        //         _oldManager = GetManager();
+        //         if (_oldManager != null)
+        //             _oldManager.DragPaneServices.Register(this);
+        //     }
+        // }
         #endregion
 
         protected abstract bool IsSurfaceVisible

@@ -266,12 +266,12 @@ namespace AvalonDock
             return base.OpenContextMenu(popupButton, ptMouse);
         }
 
-        static void OnContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnContentPropertyChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
 
         }
 
-        static object OnCoerceValueContentProperty(DependencyObject d, object baseValue)
+        static object OnCoerceValueContentProperty(AvaloniaObject d, object baseValue)
         {
             DocumentFloatingWindow fl = ((DocumentFloatingWindow)d);
 

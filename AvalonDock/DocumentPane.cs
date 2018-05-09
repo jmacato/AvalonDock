@@ -140,7 +140,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the ContainsActiveDocument property.
         /// </summary>
-        private static void OnContainsActiveDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnContainsActiveDocumentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DocumentPane)d).OnContainsActiveDocumentChanged(e);
         }

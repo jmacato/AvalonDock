@@ -9,16 +9,12 @@ namespace AvalonDock
     public sealed class PaneCommands
     {
         static object syncRoot = new object();
-
-
-
-
         private static RoutedUICommand dockCommand = null;
 
         /// <summary>
         /// Dock <see cref="Pane"/> to container <see cref="DockingManager"/>
         /// </summary>
-        public static RoutedUICommand Dock
+        public static Command Dock
         {
             get
             {

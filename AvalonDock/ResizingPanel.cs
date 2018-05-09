@@ -61,17 +61,17 @@ namespace AvalonDock
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(ResizingPanel), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure, OnOrientationChanged));
 
-        static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnOrientationChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((ResizingPanel)d).splitterListIsDirty = true;
         }
 
-        public static GridLength GetResizeWidth(DependencyObject obj)
+        public static GridLength GetResizeWidth(AvaloniaObject obj)
         {
             return (GridLength)obj.GetValue(ResizeWidthProperty);
         }
 
-        public static void SetResizeWidth(DependencyObject obj, GridLength value)
+        public static void SetResizeWidth(AvaloniaObject obj, GridLength value)
         {
             obj.SetValue(ResizeWidthProperty, value);
         }
@@ -86,12 +86,12 @@ namespace AvalonDock
                 OnCoerceSplitSize),
                 new ValidateValueCallback(IsSplitSizeValid));
 
-        public static GridLength GetResizeHeight(DependencyObject obj)
+        public static GridLength GetResizeHeight(AvaloniaObject obj)
         {
             return (GridLength)obj.GetValue(ResizeHeightProperty);
         }
 
-        public static void SetResizeHeight(DependencyObject obj, GridLength value)
+        public static void SetResizeHeight(AvaloniaObject obj, GridLength value)
         {
             obj.SetValue(ResizeHeightProperty, value);
         }
@@ -106,14 +106,14 @@ namespace AvalonDock
                 OnCoerceSplitSize),
                 new ValidateValueCallback(IsSplitSizeValid));
 
-        static void OnSplitSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        static void OnSplitSizeChanged(AvaloniaObject sender, DependencyPropertyChangedEventArgs e)
         {
             ResizingPanel parentPanel = LogicalTreeHelper.GetParent(sender) as ResizingPanel;
             if (parentPanel != null)
                 parentPanel.InvalidateMeasure();
         }
 
-        static object OnCoerceSplitSize(DependencyObject sender, object value)
+        static object OnCoerceSplitSize(AvaloniaObject sender, object value)
         {
             GridLength gd = (GridLength)value;
 
@@ -131,12 +131,12 @@ namespace AvalonDock
 
 
 
-        public static Size GetEffectiveSize(DependencyObject obj)
+        public static Size GetEffectiveSize(AvaloniaObject obj)
         {
             return (Size)obj.GetValue(EffectiveSizeProperty);
         }
 
-        public static void SetEffectiveSize(DependencyObject obj, Size value)
+        public static void SetEffectiveSize(AvaloniaObject obj, Size value)
         {
             obj.SetValue(EffectiveSizeProperty, value);
         }
@@ -862,7 +862,7 @@ namespace AvalonDock
             setupSplitters = false;
         }
 
-        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        protected override void OnVisualChildrenChanged(AvaloniaObject visualAdded, AvaloniaObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 

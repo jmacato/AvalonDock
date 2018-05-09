@@ -42,7 +42,7 @@ namespace AvalonDock
 {
     public abstract class PaneTabPanel : Panel
     {
-        protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+        protected override void OnVisualChildrenChanged(AvaloniaObject visualAdded, AvaloniaObject visualRemoved)
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 
@@ -84,7 +84,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the TabItemStyle property.
         /// </summary>
-        private static void OnTabItemStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTabItemStyleChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((PaneTabPanel)d).OnTabItemStyleChanged(e);
         }

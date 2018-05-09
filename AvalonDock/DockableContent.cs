@@ -37,6 +37,7 @@ using System.Diagnostics;
 using System.Xml;
 using System.ComponentModel;
 using System.Linq;
+using Avalonia.Interactivity;
 
 namespace AvalonDock
 {
@@ -87,7 +88,7 @@ namespace AvalonDock
     /// </summary>
     /// <remarks>This style can be composed with the 'or' operator.</remarks>
     public enum DockableStyle : uint
-    { 
+    {
         /// <summary>
         /// Content is not dockable at all
         /// </summary>
@@ -96,12 +97,12 @@ namespace AvalonDock
         /// <summary>
         /// Dockable as document
         /// </summary>
-        Document    = 0x0001,
+        Document = 0x0001,
 
         /// <summary>
         /// Dockable to the left border of <see cref="DockingManager"/>
         /// </summary>
-        LeftBorder  = 0x0002,
+        LeftBorder = 0x0002,
 
         /// <summary>
         /// Dockable to the right border of <see cref="DockingManager"/>
@@ -111,18 +112,18 @@ namespace AvalonDock
         /// <summary>
         /// Dockable to the top border of <see cref="DockingManager"/>
         /// </summary>
-        TopBorder   = 0x0008,
+        TopBorder = 0x0008,
 
         /// <summary>
         /// Dockable to the bottom border of <see cref="DockingManager"/>
         /// </summary>
-        BottomBorder= 0x0010,
+        BottomBorder = 0x0010,
 
         /// <summary>
         /// A <see cref="DockableContent"/> with this style can be hosted in a <see cref="FloatingWindow"/>
         /// </summary>
         Floating = 0x0020,
-        
+
         /// <summary>
         /// A <see cref="DockableContent"/> with this style can be the only one content in a <see cref="DockablePane"/> pane (NOT YET SUPPORTED)
         /// </summary>
@@ -138,7 +139,7 @@ namespace AvalonDock
         /// Dockable only to a border of a <see cref="DockingManager"/>
         /// </summary>
         DockableToBorders = LeftBorder | RightBorder | TopBorder | BottomBorder | AutoHide,
-        
+
         /// <summary>
         /// Dockable to a border of a <see cref="DockingManager"/> and into a <see cref="DocumentPane"/>
         /// </summary>
@@ -170,14 +171,14 @@ namespace AvalonDock
             double width,
             double height,
             AnchorStyle anchor,
-			DockableContentState state)
+            DockableContentState state)
         {
             ContainerPane = containerPane;
             ChildIndex = childIndex;
             Width = Math.Max(width, 100.0);
             Height = Math.Max(height, 100.0);
             Anchor = anchor;
-			State = state;
+            State = state;
         }
 
         public DockableContentStateAndPosition(
@@ -196,8 +197,8 @@ namespace AvalonDock
             State = state;
         }
 
-       public DockableContentStateAndPosition(
-            DockableContent cntToSave)
+        public DockableContentStateAndPosition(
+             DockableContent cntToSave)
         {
             ContainerPane = cntToSave.ContainerPane;
             ChildIndex = ContainerPane.Items.IndexOf(cntToSave);
@@ -249,20 +250,20 @@ namespace AvalonDock
             base.OnContentUnloaded();
         }
 
-		SizeToContent _floatingWindowSizeToContent = SizeToContent.Manual;
+        SizeToContent _floatingWindowSizeToContent = SizeToContent.Manual;
 
-		/// <summary>
-		/// Gets or sets a value indicating if this dockable content should change the size of a FloatingWindow when undocked
-		/// </summary>
-		public SizeToContent FloatingWindowSizeToContent
-		{
-			get { return _floatingWindowSizeToContent; }
-			set
-			{
-				_floatingWindowSizeToContent = value;
+        /// <summary>
+        /// Gets or sets a value indicating if this dockable content should change the size of a FloatingWindow when undocked
+        /// </summary>
+        public SizeToContent FloatingWindowSizeToContent
+        {
+            get { return _floatingWindowSizeToContent; }
+            set
+            {
+                _floatingWindowSizeToContent = value;
                 RaisePropertyChanged("FloatingWindowSizeToContent");
-			}
-		}
+            }
+        }
 
         #region Drag content
         protected override void OnDragMouseMove(object sender, MouseEventArgs e)
@@ -272,16 +273,16 @@ namespace AvalonDock
 
         protected override void OnDragStart(Point ptMouse, Point ptRelativeMouse)
         {
-            if (DockableStyle != DockableStyle.None && 
+            if (DockableStyle != DockableStyle.None &&
                 (State == DockableContentState.Docked || State == DockableContentState.Document || State == DockableContentState.DockableWindow) &&
                 !Manager.DragPaneServices.IsDragging)
             {
-                Manager.Drag(this, HelperFunc.PointToScreenWithoutFlowDirection(this, ptMouse), ptRelativeMouse);                
+                Manager.Drag(this, HelperFunc.PointToScreenWithoutFlowDirection(this, ptMouse), ptRelativeMouse);
             }
 
             base.OnDragStart(ptMouse, ptRelativeMouse);
-        }        
-        
+        }
+
         #endregion
 
         #region State Properties & Events
@@ -291,64 +292,35 @@ namespace AvalonDock
         /// <summary>
         /// StateChanged Routed Event
         /// </summary>
-        public static readonly RoutedEvent StateChangedEvent = EventManager.RegisterRoutedEvent("StateChanged",
-            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(DockableContent));
+        public static readonly RoutedEvent StateChangedEvent =
+
+         RoutedEvent.Register<RoutedEventArgs>(nameof(StateChanged),
+            RoutingStrategies.Bubble, typeof(DockableContent));
 
         /// <summary>
         /// Occurs when State property changes
         /// </summary>
-        public event RoutedEventHandler StateChanged
+        public event EventHandler<RoutedEvent> StateChanged
         {
             add { AddHandler(StateChangedEvent, value); }
             remove { RemoveHandler(StateChangedEvent, value); }
         }
 
-        /// <summary>
-        /// A helper method to raise the StateChanged event.
-        /// </summary>
-        protected RoutedEventArgs RaiseStateChangedEvent()
-        {
-            return RaiseStateChangedEvent(this);
-        }
-
-        /// <summary>
-        /// A static helper method to raise the StateChanged event on a target element.
-        /// </summary>
-        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
-        static RoutedEventArgs RaiseStateChangedEvent(DependencyObject target)
-        {
-            if (target == null) return null;
-
-            RoutedEventArgs args = new RoutedEventArgs();
-            args.RoutedEvent = StateChangedEvent;
-            RoutedEventHelper.RaiseEvent(target, args);
-            return args;
-        }
-
         #endregion
-       
+
+        // Using a DependencyProperty as the backing store for State.  This enables animation, styling, binding, etc...
+        public static readonly AvaloniaProperty<DockableContentState> StatePropertyProperty =
+            AvaloniaProperty.Register<DockableContent, DockableContentState>(nameof(State));
+
         /// <summary>
         /// Gets the state of <see cref="DockableContent"/>
         /// </summary>
         public DockableContentState State
         {
-            get { return (DockableContentState)GetValue(StatePropertyKey.DependencyProperty); }
-            protected set { SetValue(StatePropertyKey, value); }
+            get { return GetValue(StatePropertyProperty); }
+            set { SetValue(StatePropertyProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for State.  This enables animation, styling, binding, etc...
-        public static readonly DependencyPropertyKey StatePropertyKey =
-            DependencyProperty.RegisterReadOnly("State",
-            typeof(DockableContentState),
-            typeof(DockableContent),
-            new FrameworkPropertyMetadata(
-                DockableContentState.None,
-                new PropertyChangedCallback(
-                    (s, e) =>
-                    {
-                        ((DockableContent)s).OnStateChanged((DockableContentState)e.OldValue, (DockableContentState)e.NewValue);
-                    }
-                    )));
 
         protected virtual void OnStateChanged(DockableContentState oldState, DockableContentState newState)
         {
@@ -358,8 +330,6 @@ namespace AvalonDock
                 ((DockablePane)ContainerPane).UpdateCanAutohideProperty();
         }
 
-        public static readonly DependencyProperty StateProperty =
-            StatePropertyKey.DependencyProperty;
 
         #region DockableStyle
 
@@ -381,14 +351,14 @@ namespace AvalonDock
 
         #endregion
 
-        
 
 
-        protected override void OnVisualParentChanged(DependencyObject oldParent)
+
+        protected override void OnVisualParentChanged(AvaloniaObject oldParent)
         {
 
-            base.OnVisualParentChanged(oldParent);           
-            
+            base.OnVisualParentChanged(oldParent);
+
             //if (oldParent == null && State == DockableContentState.None)
             //{
             //    if (Parent is FloatingDockablePane)
@@ -400,9 +370,9 @@ namespace AvalonDock
             //}
 
         }
-        
 
-	    #endregion  
+
+        #endregion
 
         #region StateMachine
 
@@ -448,7 +418,7 @@ namespace AvalonDock
         {
             State = DockableContentState.Hidden;
         }
-        
+
         internal void SetStateToDocument()
         {
             State = DockableContentState.Document;
@@ -474,7 +444,7 @@ namespace AvalonDock
         //    base.OnIsActiveContentChanged(e);
         //}
         //#endregion
-        
+
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
@@ -681,41 +651,46 @@ namespace AvalonDock
         /// </summary>
         internal virtual bool CloseOrHide(bool force)
         {
-			bool closed = false;
+            bool closed = false;
 
-			if( !force && !IsCloseable ) {
-				closed = false;
-			}
-			else if (!force && HideOnClose)
+            if (!force && !IsCloseable)
+            {
+                closed = false;
+            }
+            else if (!force && HideOnClose)
             {
                 Hide();
                 closed = true;
             }
             else
             {
-				if( !CanExecuteCommand( ManagedContentCommands.Close ) ) {
-					throw new InvalidOperationException( "This operation can be executed in this state" );
-				}
+                if (!CanExecuteCommand(ManagedContentCommands.Close))
+                {
+                    throw new InvalidOperationException("This operation can be executed in this state");
+                }
 
-                CancelEventArgs e = new CancelEventArgs( false );
-                OnClosing( e );
+                CancelEventArgs e = new CancelEventArgs(false);
+                OnClosing(e);
 
-				if( e.Cancel ) {
-					closed = false;
-				}
-				else {
-					if( ContainerPane != null ) {
-						ContainerPane.RemoveContent( ContainerPane.Items.IndexOf( this ) );
-					}
+                if (e.Cancel)
+                {
+                    closed = false;
+                }
+                else
+                {
+                    if (ContainerPane != null)
+                    {
+                        ContainerPane.RemoveContent(ContainerPane.Items.IndexOf(this));
+                    }
 
-					//Patch 8244 
-					Manager.RemoveContentFromTabGroup( this );
+                    //Patch 8244 
+                    Manager.RemoveContentFromTabGroup(this);
 
-					OnClosed();
-					closed = true;
-				}
+                    OnClosed();
+                    closed = true;
+                }
             }
-			return closed;
+            return closed;
         }
 
         /// <summary>
@@ -751,7 +726,7 @@ namespace AvalonDock
                         parentPane.Items.Insert(0, this);
                         parentPane.SelectedIndex = 0;
                     }
-                }            
+                }
             }
             base.Activate();
         }
@@ -765,7 +740,7 @@ namespace AvalonDock
         {
             //if (State == DockableContentState.None)
             //    return false;
-            
+
             if (command == ManagedContentCommands.Hide)
             {
                 if (State == DockableContentState.Hidden)
@@ -931,8 +906,8 @@ namespace AvalonDock
                     containerPaneGuid = new Guid(contentElement.GetAttribute("ContainerPaneID"));
 
                     if (Manager != null)
-                    { 
-                        ILinqToTree<DependencyObject> itemFound = new LogicalTreeAdapter(Manager).Descendants().FirstOrDefault(el => el.Item is DockablePane && ((el.Item as DockablePane).ID == containerPaneGuid));
+                    {
+                        ILinqToTree<AvaloniaObject> itemFound = new LogicalTreeAdapter(Manager).Descendants().FirstOrDefault(el => el.Item is DockablePane && ((el.Item as DockablePane).ID == containerPaneGuid));
                         paneRef = itemFound != null ? itemFound.Item as DockablePane : null;
                     }
                 }
@@ -958,7 +933,7 @@ namespace AvalonDock
                        (DockableContentState)Enum.Parse(typeof(DockableContentState), contentElement.GetAttribute("State")));
                 }
             }
-        } 
+        }
         #endregion
 
         #region FlyoutWindowSize
@@ -986,7 +961,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the FlyoutWindowSize property.
         /// </summary>
-        private static void OnFlyoutWindowSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnFlyoutWindowSizeChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
         }
 
@@ -994,7 +969,7 @@ namespace AvalonDock
         /// <summary>
         /// Coerces the FlyoutWindowSize value.
         /// </summary>
-        private static object CoerceFlyoutWindowSizeValue(DependencyObject d, object value)
+        private static object CoerceFlyoutWindowSizeValue(AvaloniaObject d, object value)
         {
             //coerces size to 100.0-100.0
             Size newSize = (Size)value;

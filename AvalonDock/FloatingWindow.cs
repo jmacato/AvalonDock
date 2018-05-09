@@ -54,8 +54,8 @@ namespace AvalonDock
     {
         static FloatingWindow()
         {
-            Window.ShowInTaskbarProperty.OverrideMetadata(typeof(FloatingWindow), new FrameworkPropertyMetadata(false));
-            Window.WindowStyleProperty.OverrideMetadata(typeof(FloatingWindow), new FrameworkPropertyMetadata(WindowStyle.ToolWindow));
+            Window.ShowInTaskbarProperty.OverrideMetadata(typeof(FloatingWindow), new StyledPropertyMetadata(defaultValue:false));
+            // Window.WindowStyleProperty.OverrideMetadata(typeof(FloatingWindow), new FrameworkPropertyMetadata(WindowStyle.ToolWindow));
         }
 
 
@@ -453,27 +453,6 @@ namespace AvalonDock
             EnableMenuItem(hMenu, menuItemCount - 1, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
             DrawMenuBar(helper.Handle);
         }
-
-        #endregion
-
-        #region Non-Client area management
-
-        protected const int WM_MOVE = 0x0003;
-        protected const int WM_SIZE = 0x0005;
-        protected const int WM_NCMOUSEMOVE = 0xa0;
-        protected const int WM_NCLBUTTONDOWN = 0xA1;
-        protected const int WM_NCLBUTTONUP = 0xA2;
-        protected const int WM_NCLBUTTONDBLCLK = 0xA3;
-        protected const int WM_NCRBUTTONDOWN = 0xA4;
-        protected const int WM_NCRBUTTONUP = 0xA5;
-        protected const int HTCAPTION = 2;
-        protected const int SC_MOVE = 0xF010;
-        protected const int WM_SYSCOMMAND = 0x0112;
-
-
-
-        #region Load/Unload window events
-
 
         protected void OnLoaded(object sender, EventArgs e)
         {
