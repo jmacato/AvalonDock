@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
+using Avalonia;
 using System.Diagnostics;
 using System.ComponentModel;
 
@@ -27,8 +27,8 @@ namespace AvalonDock
 
         public DragPaneServices(DockingManager owner)
         {
-            if (DesignerProperties.GetIsInDesignMode(owner))
-                throw new NotSupportedException("DragPaneServices not valid in design mode");
+            // if (DesignerProperties.GetIsInDesignMode(owner))
+            //     throw new NotSupportedException("DragPaneServices not valid in design mode");
 
             if (owner == null)
                 throw new ArgumentNullException("owner");
@@ -62,15 +62,17 @@ namespace AvalonDock
             _wnd = wnd;
 
             if (Offset.X >= _wnd.Width)
-                Offset.X = _wnd.Width / 2;
+            {
+                var ox = _wnd.Width / 2;
+                Offset = new Point(ox, Offset.Y);
+            }
 
-
-            _wnd.Left = point.X - Offset.X;
-            _wnd.Top = point.Y - Offset.Y;
+            _wnd.Position = new Point(point.X - Offset.X,
+                  point.Y - Offset.Y);
             _wnd.Show();
 
             int surfaceCount = 0;
-            restart:
+        restart:
             surfaceCount = Surfaces.Count;
             foreach (IDropSurface surface in Surfaces)
             {
@@ -80,14 +82,14 @@ namespace AvalonDock
                     surface.OnDragEnter(point);
                     Debug.WriteLine("Enter " + surface.ToString());
                     if (surfaceCount != Surfaces.Count)
-                    { 
+                    {
                         //Surfaces list has been changed restart cycle
                         SurfacesWithDragOver.Clear();
                         goto restart;
                     }
                 }
             }
-            
+
         }
 
         public void MoveDrag(Point point)
@@ -95,8 +97,9 @@ namespace AvalonDock
             if (_wnd == null)
                 return;
 
-            _wnd.Left = point.X - Offset.X;
-            _wnd.Top = point.Y - Offset.Y;
+            _wnd.Position = new
+            Point(point.X - Offset.X,
+                  point.Y - Offset.Y);
 
             List<IDropSurface> enteringSurfaces = new List<IDropSurface>();
             foreach (IDropSurface surface in Surfaces)
@@ -153,7 +156,7 @@ namespace AvalonDock
                 _wnd.Close();
             else
             {
-                _wnd.Visibility = Visibility.Visible;
+                _wnd.IsVisible = true;
                 _wnd.Activate();
             }
 

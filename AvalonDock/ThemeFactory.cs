@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2009, Juergen Schildmann
+//Copyright (c) 2009, Juergen Schildmann
 //Copyright (c) 2007-2010, Adolfo Marinucci
 //All rights reserved. See LICENSE.MD for licensing information.
 
@@ -6,8 +6,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
+using Avalonia;
+using Avalonia.Media;
 
 namespace AvalonDock
 {

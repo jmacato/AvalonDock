@@ -4,18 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Interop;
-using System.ComponentModel;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data; 
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+ using System.Diagnostics;
+ using System.ComponentModel;
 using System.IO;
 using System.Xml;
 using System.Linq;
@@ -34,7 +31,7 @@ namespace AvalonDock
     {
         static DockingManager()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DockingManager), new FrameworkPropertyMetadata(typeof(DockingManager)));
+           // DefaultStyleKeyProperty.OverrideMetadata(typeof(DockingManager), new FrameworkPropertyMetadata(typeof(DockingManager)));
         }
 
 
@@ -189,9 +186,9 @@ namespace AvalonDock
         {
             base.OnApplyTemplate();
 
-            Panel leftPanel = GetTemplateChild("PART_LeftAnchorTabPanel") as Panel;
+            Panel leftPanel =  ("PART_LeftAnchorTabPanel") as Panel;
             if (leftPanel == null)
-                throw new ArgumentException("PART_LeftAnchorTabPanel template child element not fount!");
+                throw new ArgumentException("PART_LeftAnchorTabPanel template child element not found!");
 
             Panel rightPanel = GetTemplateChild("PART_RightAnchorTabPanel") as Panel;
             if (rightPanel == null)
@@ -493,9 +490,9 @@ namespace AvalonDock
                         DocumentContent documentToAdd = newDoc as DocumentContent;
                         documentToAdd.InternalClose();
                     }
-                    else if (newDoc is FrameworkElement)
+                    else if (newDoc is Control)
                     {
-                        DocumentContent docContainer = ((FrameworkElement)newDoc).Parent as DocumentContent;
+                        DocumentContent docContainer = ((Control)newDoc).Parent as DocumentContent;
                         if (docContainer != null)
                             docContainer.InternalClose();
                     }
@@ -646,7 +643,7 @@ namespace AvalonDock
                             {
                                 MainDocumentPane.Items.Add(newDoc);
                             }
-                            else if (newDoc is FrameworkElement) //limit objects to be at least framework elements
+                            else if (newDoc is Control) //limit objects to be at least framework elements
                             {
                                 DocumentContent docContainer = new DocumentContent();
                                 docContainer.Content = newDoc;
@@ -987,7 +984,7 @@ namespace AvalonDock
                 return;
 
             //remove the pane from its original children collection
-            FrameworkElement parentElement = paneToAnchor.Parent as FrameworkElement;
+            Control parentElement = paneToAnchor.Parent as Control;
 
             if (anchor == AnchorStyle.None)
                 anchor = AnchorStyle.Right;
@@ -1032,7 +1029,7 @@ namespace AvalonDock
                 toplevelPanel = new ResizingPanel();
                 toplevelPanel.Orientation = requestedOrientation;
 
-                FrameworkElement contentElement = Content as FrameworkElement;
+                Control contentElement = Content as Control;
                 
                 _allowRefreshContents = false;
                 Content = null;
@@ -1061,12 +1058,12 @@ namespace AvalonDock
                     anchor == AnchorStyle.Top)
                 {
                     //add new child before first one (prepend)
-                    toplevelPanel.InsertChildRelativeTo(paneToAnchor, toplevelPanel.Children[0] as FrameworkElement, false);
+                    toplevelPanel.InsertChildRelativeTo(paneToAnchor, toplevelPanel.Children[0] as Control, false);
                 }
                 else
                 {
                     //add new child after last one (append)
-                    toplevelPanel.InsertChildRelativeTo(paneToAnchor, toplevelPanel.Children[toplevelPanel.Children.Count - 1] as FrameworkElement, true);
+                    toplevelPanel.InsertChildRelativeTo(paneToAnchor, toplevelPanel.Children[toplevelPanel.Children.Count - 1] as Control, true);
                 }
             }
 
@@ -1794,12 +1791,12 @@ namespace AvalonDock
             }
 
             //refresh arrangements traversing bottom-up visual tree
-            FrameworkElement parentElement = pane.Parent as FrameworkElement;
+            Control parentElement = pane.Parent as Control;
 
             while (parentElement != null)
             {
                 parentElement.InvalidateMeasure();
-                parentElement = parentElement.Parent as FrameworkElement;
+                parentElement = parentElement.Parent as Control;
             }
 
 
@@ -2064,8 +2061,8 @@ namespace AvalonDock
                     //floatingWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     //if (content.Content != null)
                     //{
-                    //    floatingWindow.Width = Math.Min(((FrameworkElement)content.Content).ActualWidth, ResizingPanel.GetResizeWidth(content.ContainerPane));
-                    //    floatingWindow.Height = Math.Min(((FrameworkElement)content.Content).ActualHeight, ResizingPanel.GetResizeHeight(content.ContainerPane));
+                    //    floatingWindow.Width = Math.Min(((Control)content.Content).ActualWidth, ResizingPanel.GetResizeWidth(content.ContainerPane));
+                    //    floatingWindow.Height = Math.Min(((Control)content.Content).ActualHeight, ResizingPanel.GetResizeHeight(content.ContainerPane));
                     //}
                     //else
                     ////{
@@ -2394,7 +2391,7 @@ namespace AvalonDock
             AnchorStyle currentAnchor = panel.Orientation == Orientation.Horizontal ? AnchorStyle.Left : AnchorStyle.Top;
             bool foundDocumentContent = false;
 
-            foreach (FrameworkElement child in panel.Children)
+            foreach (Control child in panel.Children)
             {
                 if (child is ResizingPanel)
                 {
@@ -2427,7 +2424,7 @@ namespace AvalonDock
         /// <param name="forcedAnchor"></param>
         void ForceAnchorStyle(ResizingPanel panel, AnchorStyle forcedAnchor)
         {
-            foreach (FrameworkElement child in panel.Children)
+            foreach (Control child in panel.Children)
             {
                 if (child is ResizingPanel)
                 {
@@ -2595,7 +2592,7 @@ namespace AvalonDock
             bool hOrientation = _flyoutWindow.ReferencedPane.Anchor == AnchorStyle.Right || _flyoutWindow.ReferencedPane.Anchor == AnchorStyle.Left;
 
             Point locDockingManager = HelperFunc.PointToScreenWithoutFlowDirection(this, new Point());
-            Point locContent = HelperFunc.PointToScreenWithoutFlowDirection(Content as FrameworkElement, new Point());
+            Point locContent = HelperFunc.PointToScreenWithoutFlowDirection(Content as Control, new Point());
 
             Size initialSetupFlyoutWindowSize = Size.Empty;
             initialSetupFlyoutWindowSize = (_flyoutWindow.ReferencedPane.SelectedItem as DockableContent).FlyoutWindowSize;

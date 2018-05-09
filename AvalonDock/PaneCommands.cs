@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
+using Avalonia.Input;
 
 namespace AvalonDock
 {
     public sealed class PaneCommands
     {
         static object syncRoot = new object();
-
-
-
 
         private static RoutedUICommand dockCommand = null;
 

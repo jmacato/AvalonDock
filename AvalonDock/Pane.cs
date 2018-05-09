@@ -2,21 +2,21 @@
 //All rights reserved. See LICENSE.MD for licensing information.
 
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
-using System.Windows.Controls.Primitives;
+using Avalonia.Controls.Primitives;
 using System.Threading;
-using System.Windows.Threading;
+using Avalonia.Threading;
 
 namespace AvalonDock
 {
     public abstract class Pane : 
-        System.Windows.Controls.Primitives.Selector, 
+       Avalonia.Controls.Primitives.SelectingItemsControl,
         IDropSurface,
         IDockableControl,
         INotifyPropertyChanged
@@ -46,20 +46,20 @@ namespace AvalonDock
         }
 
         #region Contents management
-        public bool HasSingleItem
-        {
-            get
-            {
-                return (bool)GetValue(HasSingleItemProperty);
-            }
-            protected set { SetValue(HasSingleItemPropertyKey, value); }
-        }
+        // public bool HasSingleItem
+        // {
+        //     get
+        //     {
+        //         return (bool)GetValue(HasSingleItemProperty);
+        //     }
+        //     protected set { SetValue(HasSingleItemPropertyKey, value); }
+        // }
 
-        // Using a DependencyProperty as the backing store for HasSingleItem.  This enables animation, styling, binding, etc...
-        private static readonly DependencyPropertyKey HasSingleItemPropertyKey =
-            DependencyProperty.RegisterReadOnly("HasSingleItem", typeof(bool), typeof(Pane), new PropertyMetadata(false));
+        // // Using a DependencyProperty as the backing store for HasSingleItem.  This enables animation, styling, binding, etc...
+        // private static readonly DependencyPropertyKey HasSingleItemPropertyKey =
+        //     DependencyProperty.RegisterReadOnly("HasSingleItem", typeof(bool), typeof(Pane), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty HasSingleItemProperty = HasSingleItemPropertyKey.DependencyProperty;
+        // public static readonly DependencyProperty HasSingleItemProperty = HasSingleItemPropertyKey.DependencyProperty;
 
         
         ManagedContent _lastSelectedContent = null;
@@ -128,7 +128,7 @@ namespace AvalonDock
 
         }
 
-        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        protected override void OnVisualParentChanged(AvaloniaObject oldParent)
         {
             DockingManager dockManager = GetManager();
             if (dockManager != null)
@@ -159,7 +159,7 @@ namespace AvalonDock
 
         public virtual DockingManager GetManager()
         {
-            DependencyObject parent = LogicalTreeHelper.GetParent(this);
+            AvaloniaObject parent = LogicalTreeHelper.GetParent(this);
 
             while (parent != null &&
                 (!(parent is DockingManager)))
@@ -204,7 +204,7 @@ namespace AvalonDock
         /// <summary>
         /// Handles changes to the ContainsActiveContent property.
         /// </summary>
-        private static void OnContainsActiveContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnContainsActiveContentChanged(AvaloniaObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Pane)d).OnContainsActiveContentChanged(e);
         }
@@ -278,7 +278,7 @@ namespace AvalonDock
                     return new Rect();
 
                 var actualSize = this.TransformedActualSize();
-                return new Rect(HelperFunc.PointToScreenWithoutFlowDirection(this, new Point()), new Size(actualSize.Width, actualSize.Height));
+                return new Rect(HelperFunc.PointToScreen(this, new Point()), new Size(actualSize.Width, actualSize.Height));
             }            
         }
         Rect IDropSurface.SurfaceRectangle
@@ -421,9 +421,9 @@ namespace AvalonDock
         protected void FocusContent()
         {
             ManagedContent selectedContent = SelectedItem as ManagedContent;
-            if (selectedContent != null)// && selectedContent.Content is UIElement)
+            if (selectedContent != null)// && selectedContent.Content is Control)
             {
-                //UIElement internalContent = selectedContent.Content as UIElement;
+                //Control internalContent = selectedContent.Content as Control;
                 //bool res = Focus();
                 //Keyboard.Focus(internalContent);
                 selectedContent.Activate();
@@ -439,7 +439,7 @@ namespace AvalonDock
         /// <param name="menuTarget">Target element under which context menu will be shown. Pass null if context menu
         /// should be shown at mouse position.</param>
         /// <returns>True if context menu resource was found and open, false otherwise.</returns>
-        public virtual bool OpenOptionsMenu(UIElement menuTarget)
+        public virtual bool OpenOptionsMenu(Control menuTarget)
         {
             if (_attachedCxOptions != cxOptions)
             {

@@ -1,5 +1,4 @@
-﻿<Window x:Class="Sample5.MainWindow"
-        xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         Title="MainWindow" Height="350" Width="525">

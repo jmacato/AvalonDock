@@ -4,21 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
+using Avalonia.Documents;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Shapes;
 using System.ComponentModel;
-using System.Windows.Markup;
+using Avalonia.Markup;
 using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows.Media.Animation;
-using System.Windows.Interop;
+using Avalonia.Threading;
+using Avalonia.Media.Animation;
+using Avalonia.Interop;
 using System.Linq;
 
 namespace AvalonDock
@@ -205,8 +205,8 @@ namespace AvalonDock
                 case WM_NCLBUTTONDBLCLK: //Left Button Double Click -> Maximixe/Normal
                     if (e.WParam.ToInt32() == HTCAPTION)
                     {
-                        WindowState = WindowState == System.Windows.WindowState.Maximized ?
-                            System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
+                        WindowState = WindowState ==Avalonia.WindowState.Maximized ?
+                           Avalonia.WindowState.Normal :Avalonia.WindowState.Maximized;
                         e.Handled = true;
                     }
                     break;

@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ad="clr-namespace:AvalonDock">
 
@@ -6,7 +6,7 @@
     <SolidColorBrush x:Key="ManagedContentTabControlNormalBorderBrush"
                      Color="#919B9C"/>
 
-    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DefaultBackgroundBrush}}" 
+    <SolidColorBrush x:Key="DefaultBackgroundBrush" 
 					 Color="#FFF4F2E8"/>
 
     <!--Brushes for tab item header-->
@@ -61,7 +61,7 @@
                      Color="#FFC9C7BA"/>
 
     <!--Brushes for dockable pane headers-->
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DockablePaneTitleBackgroundSelected}}"
+    <LinearGradientBrush x:Key="DockablePaneTitleBackgroundSelected"
                          StartPoint="0,0"
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -73,44 +73,44 @@
     </LinearGradientBrush>
 
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DockablePaneTitleBackground}}" 
+        x:Key="DockablePaneTitleBackground" 
         Color="#FFCCC5BA"/>
     
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DockablePaneTitleForeground}}" 
+        x:Key="DockablePaneTitleForeground" 
         Color="Black"/>
 
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DockablePaneTitleForegroundSelected}}" 
+        x:Key="DockablePaneTitleForegroundSelected" 
         Color="White"/>
 
 
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.PaneHeaderCommandBackground}}" 
-        Color="{x:Static SystemColors.ControlLightLightColor}" Opacity="0.5" />
+        x:Key="PaneHeaderCommandBackground" 
+        Color="Gray" Opacity="0.5" />
 
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.PaneHeaderCommandBorderBrush}}" 
-        Color="{x:Static SystemColors.ControlDarkColor}"/>
+        x:Key="PaneHeaderCommandBorderBrush" 
+        Color="Gray"/>
 
 
     <!--Brushes for document headers-->
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DocumentHeaderBackground}}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="DocumentHeaderBackground" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FFE0E0E0" Offset="1" />
     </LinearGradientBrush>
 
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DocumentHeaderForeground}}" 
-        Color="{x:Static SystemColors.WindowTextColor}"/>
+        x:Key="DocumentHeaderForeground" 
+        Color="Black"/>
     
-    <LinearGradientBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundSelected}}" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush x:Key="DocumentHeaderBackgroundSelected" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FFC1D2EE" Offset="1" />
     </LinearGradientBrush>
     
     <SolidColorBrush 
-        x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:AvalonDockBrushes.DocumentHeaderBackgroundMouseOver}}" 
+        x:Key="DocumentHeaderBackgroundMouseOver" 
         Color="White"/>
 
 </ResourceDictionary>

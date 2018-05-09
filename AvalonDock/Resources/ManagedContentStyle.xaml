@@ -1,10 +1,10 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/AvalonDock;component/Resources/Brushes.xaml"/>
-        <ResourceDictionary Source="/AvalonDock;component/Resources/Common.xaml"/>
+        <ResourceDictionary Source="resm:AvalonDock.Resources/Brushes.xaml"/>
+        <ResourceDictionary Source="resm:AvalonDock.Resources/Common.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 	<!--ManagedContent-->

@@ -4,16 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Markup;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
+using Avalonia.Documents;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Shapes;
+using Avalonia.Markup;
 using System.Diagnostics;
 using System.Linq;
 
@@ -864,7 +864,7 @@ namespace AvalonDock
                 trToWnd.Transform(new Point());
             
 
-            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
+            if (Orientation ==Avalonia.Controls.Orientation.Horizontal)
             {
                 Canvas.SetLeft(_resizerGhost, _initialStartPoint.X + transformedDelta.X);
             }
@@ -1351,7 +1351,7 @@ namespace AvalonDock
 
             Size actualSize = this.TransformedActualSize();
 
-            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
+            if (Orientation ==Avalonia.Controls.Orientation.Horizontal)
             {
                 _resizerGhost.Width = 5.0;
                 _resizerGhost.Height = actualSize.Height;
@@ -1364,7 +1364,7 @@ namespace AvalonDock
 
             _initialStartPoint = splitter.PointToScreenDPI(new Point()) - this.PointToScreenDPI(new Point());
 
-            if (Orientation == System.Windows.Controls.Orientation.Horizontal)
+            if (Orientation ==Avalonia.Controls.Orientation.Horizontal)
             {
                 Canvas.SetLeft(_resizerGhost, _initialStartPoint.X);
             }
@@ -1375,8 +1375,8 @@ namespace AvalonDock
 
             Canvas panelHostResizer = new Canvas() 
             { 
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                VerticalAlignment = System.Windows.VerticalAlignment.Stretch
+                HorizontalAlignment =Avalonia.HorizontalAlignment.Stretch,
+                VerticalAlignment =Avalonia.VerticalAlignment.Stretch
             };
 
             panelHostResizer.Children.Add(_resizerGhost);
@@ -1385,7 +1385,7 @@ namespace AvalonDock
             _resizerWindowHost = new Window()
             {
                 ResizeMode = ResizeMode.NoResize,
-                WindowStyle = System.Windows.WindowStyle.None,
+                WindowStyle =Avalonia.WindowStyle.None,
                 ShowInTaskbar = false,
                 AllowsTransparency = true,
                 Background = null,

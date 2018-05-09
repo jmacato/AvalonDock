@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary 
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ad="clr-namespace:AvalonDock">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/AvalonDock;component/Resources/Brushes.xaml"/>
-        <ResourceDictionary Source="/AvalonDock;component/Resources/Common.xaml"/>
+        <ResourceDictionary Source="resm:AvalonDock.Resources/Brushes.xaml"/>
+        <ResourceDictionary Source="resm:AvalonDock.Resources/Common.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <ContextMenu x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ad:DockingManager}, ResourceId={x:Static ad:ContextMenuElement.DocumentPane}}">
@@ -14,13 +14,13 @@
         <Separator/>
         <MenuItem Command="ad:DocumentPaneCommands.NewHorizontalTabGroup">
             <MenuItem.Icon>
-                <ad:ImageEx Source="/AvalonDock;component/resources/Images/HTabGroup.png" Width="13" Height="14"/>
+                <ad:ImageEx Source="resm:AvalonDock.resources/Images/HTabGroup.png" Width="13" Height="14"/>
             </MenuItem.Icon>
         </MenuItem> 
         <MenuItem 
             Command="ad:DocumentPaneCommands.NewVerticalTabGroup"  >
             <MenuItem.Icon>
-                <ad:ImageEx Source="/AvalonDock;component/resources/Images/VTabGroup.png" Width="13"/>
+                <ad:ImageEx Source="resm:AvalonDock.resources/Images/VTabGroup.png" Width="13"/>
             </MenuItem.Icon>
         </MenuItem>
     </ContextMenu>
@@ -75,7 +75,7 @@
 							            Margin="5,0,4,0"  
 							            Foreground="{DynamicResource {ComponentResourceKey {x:Type ad:DockingManager}, {x:Static ad:AvalonDockBrushes.DocumentHeaderForeground}}}"/>
 									<!--<ad:AlignedImage x:Name="PART_LockedIcon" Margin="2,0,0,0" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center">-->
-                                    <ad:ImageEx  x:Name="PART_LockedIcon" Margin="2,0,0,0" Visibility="Collapsed" Source="/AvalonDock;component/resources/Images/Locked.png" Width="6" />
+                                    <ad:ImageEx  x:Name="PART_LockedIcon" Margin="2,0,0,0" Visibility="Collapsed" Source="resm:AvalonDock.resources/Images/Locked.png" Width="6" />
 									<!--</ad:AlignedImage>-->
 								</StackPanel>
                             </Border>  
